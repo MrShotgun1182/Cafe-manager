@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ورود کارکنان</title>
+    <style>
+        body { font-family: Tahoma; background: #f0f2f5; display: flex; justify-content: center; padding-top: 100px; }
+        .login-box { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+        input { width: 100%; padding: 10px; margin-top: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #2c3e50; color: white; border: none; margin-top: 20px; cursor: pointer; }
+        .error { color: red; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h3 style="text-align: center;">ورود به پنل کافه</h3>
+        
+        {% if form.errors %}
+            <p class="error">نام کاربری یا رمز عبور غلط است.</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="نام کاربری" required>
+            <input type="password" name="password" placeholder="رمز عبور" required>
+            <button type="submit">ورود</button>
+        </form>
+    </div>
+</body>
+</html>

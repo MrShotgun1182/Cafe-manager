@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Category, Order, OrderItem, MenuItem
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 def menu_view(request):
     if request.method == 'POST':
@@ -20,6 +21,10 @@ def menu_view(request):
     categories = Category.objects.all()
     return render(request, 'core/menu.html', {'categories': categories})
 
+def is_staff(user):
+    return user.is_staff
+
+@user_passes_test(is_staff, login_url='login')
 def staff_dashboard(request):
     # گرفتن تاریخ امروز
     today = timezone.now().date()
@@ -34,9 +39,6 @@ def change_status(request, order_id, new_status):
     order.status = new_status
     order.save()
     return redirect('staff_dashboard')
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import MenuItem, Order, OrderItem
 
 def submit_order(request):
     if request.method == "POST":
@@ -74,3 +76,4 @@ def submit_order(request):
         return render(request, 'core/order_success.html', {'order': new_order})
 
     return redirect('menu')
+
