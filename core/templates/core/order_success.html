@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>ثبت موفقیت‌آمیز</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; font-family: Tahoma, sans-serif; }
+        .success-card { 
+            max-width: 400px; 
+            margin: 100px auto; 
+            padding: 30px; 
+            background: white; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .btn-return { background-color: #4e342e; color: white; border-radius: 12px; padding: 10px 25px; }
+        .btn-return:hover { color: white; opacity: 0.9; }
+    </style>
+</head>
+<body class="text-center">
+    <div class="container">
+        <div class="success-card">
+            <h1 class="display-1 text-success">✅</h1>
+            <h3 class="mb-3">سفارش شما ثبت شد</h3>
+            <p class="text-muted mb-4">شماره پیگیری شما: <strong>{{ order.id }}</strong></p>
+            
+            <a href="{% url 'menu' %}" class="btn btn-return text-decoration-none">
+                بازگشت به منو
+            </a>
+        </div>
+    </div>
+</body>
+</html>

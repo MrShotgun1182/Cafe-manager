@@ -1,0 +1,26 @@
+# محیط مجازی (Virtual Environment)
+venv/
+.venv/
+env/
+
+# فایل‌های کش پایتون (Python Cache)
+__pycache__/
+*.py[cod]
+
+# تنظیمات IDE ها (مثل PyCharm یا VSCode)
+.vscode/
+.idea/
+
+# فایل‌های دیتابیس محلی (خیلی مهم!)
+db.sqlite3
+
+# فایل‌های مدیای آپلود شده توسط کاربران (تست‌ها)
+media/
+
+# فایل‌های تنظیمات حساس (اگر دارید)
+.env
+secret_key.txt
+
+# فایل‌های سیستم عامل
+.DS_Store
+Thumbs.db
