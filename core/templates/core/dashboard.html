@@ -5,17 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مدیریت هوشمند کافه</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    
     <style>
         body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        
-        /* استایل کلی کانتینر تخته */
-        .kanban-board { 
-            display: flex; 
-            gap: 15px; 
-            padding: 10px; 
-        }
-
-        /* در حالت دسکتاپ ستون‌ها کنار هم هستند */
+        .kanban-board { display: flex; gap: 15px; padding: 10px; }
         .kanban-column { 
             background-color: #e9ecef; 
             border-radius: 15px; 
@@ -24,45 +18,16 @@
             padding: 12px; 
             height: fit-content;
         }
-
-        /* جادوی ریسپانسیو: در موبایل ستون‌ها زیر هم می‌روند */
         @media (max-width: 768px) {
-            .kanban-board { 
-                flex-direction: column; 
-                padding: 5px;
-            }
-            .kanban-column { 
-                min-width: 100%; 
-                margin-bottom: 20px;
-            }
-            .navbar-brand { font-size: 1rem; }
+            .kanban-board { flex-direction: column; padding: 5px; }
+            .kanban-column { min-width: 100%; margin-bottom: 20px; }
         }
-
-        .order-card { 
-            border: none; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-            margin-bottom: 12px;
-        }
-
-        .btn-action {
-            border-radius: 8px;
-            font-weight: bold;
-            padding: 10px;
-        }
-
-        /* استایل خاص برای آیتم‌های سفارش در موبایل */
-        .item-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #eee;
-            padding: 5px 0;
-        }
+        .order-card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 12px; }
+        .btn-action { border-radius: 8px; font-weight: bold; padding: 10px; }
+        .item-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding: 5px 0; }
     </style>
 </head>
 <body>
-    {% load jalali_tags %}
-
     <nav class="navbar navbar-dark bg-dark sticky-top shadow-sm">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">پنل سفارشات ☕</span>
@@ -73,84 +38,15 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="kanban-board">
+    <div class="container-fluid mt-3">
+        <div id="order-container" 
+             hx-get="{% url 'order_list_ajax' %}" 
+             hx-trigger="every 5s" 
+             hx-swap="innerHTML">
             
-            <div class="kanban-column">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h5 class="text-danger m-0">📩 سفارشات جدید</h5>
-                    <span class="badge bg-danger rounded-pill">جدید</span>
-                </div>
-                {% for order in orders %}
-                    {% if order.status == 'seen' %}
-                        <div class="card order-card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="card-title">میز {{ order.table_number }}</h5>
-                                    <span class="text-muted small">#{{ order.id }}</span>
-                                </div>
-                                <div class="my-3">
-                                    {% for oi in order.order_items.all %} 
-                                        <div class="item-row">
-                                            <span>{{ oi.item.name }}</span>
-                                            <span class="badge bg-light text-dark">{{ oi.quantity }}x</span>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="text-start mb-3">
-                                    <small class="text-muted">{{ order.created_at|to_jalali:'%H:%M' }}</small>
-                                </div>
-                                <a href="{% url 'change_status' order.id 'is_preparing' %}" class="btn btn-warning btn-action w-100">در حال آماده‌سازی</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <div class="kanban-column" style="background-color: #e3f2fd;">
-                <h5 class="text-primary mb-3">⏳ در حال آماده‌سازی</h5>
-                {% for order in orders %}
-                    {% if order.status == 'is_preparing' %}
-                        <div class="card order-card shadow-sm">
-                            <div class="card-body">
-                                <h5>میز {{ order.table_number }}</h5>
-                                <div class="my-2">
-                                    {% for oi in order.order_items.all %} 
-                                        <div class="item-row">
-                                            <span>{{ oi.item.name }}</span>
-                                            <span class="badge bg-primary text-white">{{ oi.quantity }}x</span>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <a href="{% url 'change_status' order.id 'delivered' %}" class="btn btn-success btn-action w-100 mt-2">تحویل شد ✅</a>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
-            <div class="kanban-column" style="background-color: #f1f8e9;">
-                <h5 class="text-success mb-3">✅ تحویل شده</h5>
-                {% for order in orders %}
-                    {% if order.status == 'delivered' %}
-                        <div class="card order-card opacity-75 shadow-none border">
-                            <div class="card-body p-2">
-                                <div class="d-flex justify-content-between">
-                                    <strong class="small">میز {{ order.table_number }}</strong>
-                                    <small class="text-muted">{{ order.created_at|to_jalali:'%H:%M' }}</small>
-                                </div>
-                                <div class="small text-muted">
-                                    {% for oi in order.order_items.all %} {{ oi.item.name }}{% if not forloop.last %}، {% endif %}{% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-
+            {% include 'core/includes/order_list_fragment.html' %}
         </div>
     </div>
 
-    <script>setTimeout(function(){ location.reload(); }, 20000);</script>
-</body>
+    </body>
 </html>

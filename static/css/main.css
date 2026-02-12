@@ -1,0 +1,88 @@
+/* تم تیره مطلق */
+body {
+    background-color: #000000 !important;
+    color: #ffffff;
+}
+
+/* کارت منو با چیدمان چپ‌محور برای عملیات */
+.menu-card-pro-v4 {
+    display: flex;
+    flex-direction: row-reverse; /* محتوا در راست، عملیات در چپ */
+    background: #111111; /* مشکی کربنی */
+    border: 1px solid #1a1a1a;
+    border-radius: 16px;
+    margin-bottom: 12px;
+    height: 115px; /* ارتفاع متناسب */
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+/* بخش محتوای متنی (سمت راست) */
+.content-section {
+    flex: 1;
+    padding: 12px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: right;
+}
+
+/* بخش عملیاتی (سمت چپ: شامل عکس و دکمه‌ها) */
+.action-section {
+    display: flex;
+    background: #080808; /* تیره تر برای تفکیک */
+    width: 140px; /* عرض بخش چپ */
+    align-items: center;
+}
+
+/* ستون کنترل عمودی */
+.v-control-bar {
+    width: 45px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #1a1a1a;
+}
+
+.v-btn-action {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.v-counter-box {
+    flex: 0.8;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+/* عکس کوچک شده و گرد */
+.img-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.img-small-rounded {
+    width: 75px; /* کوچک‌تر شده */
+    height: 75px;
+    object-fit: cover;
+    border-radius: 14px; /* لبه‌های گرد */
+}
+
+/* افکت انتخاب شده */
+.menu-card-pro-v4.active-item {
+    border-color: var(--primary);
+    background: #16120e;
+}

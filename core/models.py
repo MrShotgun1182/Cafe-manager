@@ -15,6 +15,7 @@ class MenuItem(models.Model):
     cost = models.IntegerField(default=0)
     is_available = models.BooleanField(default=True)
     image = models.ImageField(upload_to='menu_images/', blank=True, null=True)
+    subtitle = models.CharField(max_length=50, blank=True, null=True, verbose_name="توضیح کوتاه")
     
     def __str__(self):
         return self.name

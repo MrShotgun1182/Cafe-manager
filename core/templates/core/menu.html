@@ -1,90 +1,21 @@
+{% load static %}
 <!doctype html>
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>منوی دیجیتال کافه</title>
+    <title>کافه دنج | منوی دیجیتال</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <style>
-      :root { 
-        --cafe-brown: #4e342e; 
-        --cafe-gold: #c6a664; 
-        --header-height: 120px; /* ارتفاع تقریبی هدر برای تنظیم اسکرول */
-      }
-      
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: var(--header-height); /* جلوگیری از مخفی شدن تیتر زیر هدر */
-      }
-
-      body { 
-        background-color: #f8f9fa; 
-        font-family: "Tahoma", sans-serif; 
-        padding-bottom: 80px; 
-      }
-
-      /* هدر چسبان ترکیبی */
-      .sticky-top-wrapper {
-        position: sticky;
-        top: 0;
-        z-index: 1050;
-        background: #f8f9fa;
-      }
-
-      .menu-header { 
-        background: var(--cafe-brown); 
-        color: white; 
-        padding: 15px; 
-        border-radius: 0 0 20px 20px; 
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-      }
-
-      /* نوار دسته‌بندی */
-      .category-nav {
-        background: white;
-        border-bottom: 1px solid #eee;
-        padding: 10px 0;
-      }
-
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-      .btn-outline-brown {
-        color: var(--cafe-brown);
-        border-color: var(--cafe-brown);
-        font-size: 0.85rem;
-        transition: all 0.3s;
-      }
-
-      .btn-outline-brown:active, .btn-outline-brown:focus {
-        background-color: var(--cafe-brown) !important;
-        color: white !important;
-      }
-
-      /* استایل کارت‌ها */
-      .menu-item-card { background: white; border-radius: 18px; border: none; margin-bottom: 15px; overflow: hidden; display: flex; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); }
-      .item-img { width: 100px; height: 100px; object-fit: cover; }
-      .item-info { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-      .item-name { font-size: 1rem; font-weight: bold; margin-bottom: 4px; color: #333; }
-      .item-price { color: var(--cafe-gold); font-weight: bold; font-size: 0.9rem; }
-      .qty-wrapper { display: flex; align-items: center; background: #f1f2f6; border-radius: 50px; padding: 2px; width: fit-content; }
-      .btn-qty { width: 30px; height: 30px; border-radius: 50%; border: none; background: white; color: var(--cafe-brown); font-weight: bold; }
-      .qty-input { width: 30px; border: none; background: transparent; text-align: center; font-weight: bold; }
-      .order-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 15px; border-top: 1px solid #eee; z-index: 1000; }
-      .btn-submit { background: var(--cafe-brown); color: white; border: none; width: 100%; padding: 12px; border-radius: 15px; font-weight: bold; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}" />
   </head>
-  <body>
-    {% load jalali_tags %}
-    <div class="sticky-top-wrapper">
-      <div class="menu-header text-center">
-        <h4 class="mb-0">☕ کافه دنج</h4>
-      </div>
-      
-      <div class="category-nav">
-        <div class="container d-flex gap-2 overflow-auto no-scrollbar py-1">
+  <body style="background-color: #000;">
+
+    <div class="cafe-navbar sticky-top" style="background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #1a1a1a;">
+      <div class="container text-center py-3">
+        <h1 class="text-gradient h4 mb-3" style="font-weight: 800;">☕ منوی کافه دنج</h1>
+        <div class="d-flex gap-2 overflow-auto no-scrollbar pb-2">
           {% for category in categories %}
-          <a href="#category-{{ category.id }}" class="btn btn-sm btn-outline-brown text-nowrap rounded-pill px-3">
+          <a href="#cat-{{ category.id }}" class="badge category-link text-decoration-none px-3 py-2" style="background: #111; border: 1px solid #222; color: #c49a6c;">
             {{ category.name }}
           </a>
           {% endfor %}
@@ -92,57 +23,74 @@
       </div>
     </div>
 
-    <form method="POST" action="{% url 'submit_order' %}" class="container mt-3">
-      {% csrf_token %}
-
+    <form method="POST" action="{% url 'submit_order' %}" class="container mt-4 mb-5 pb-5">
+      {% csrf_token %} 
+      
       {% for category in categories %}
-      <h5 id="category-{{ category.id }}" class="mb-3 mt-2 text-secondary border-bottom pb-2">
-        {{ category.name }}
-      </h5>
+      <div id="cat-{{ category.id }}" class="mb-4">
+        <h2 class="h6 mb-3 px-2" style="color: #c49a6c; border-right: 3px solid #c49a6c; padding-right: 10px;">
+             {{ category.name }}
+        </h2>
 
-      {% for item in category.items.all %}
-      <div class="menu-item-card">
-        <img src="{% if item.image %}{{ item.image.url }}{% else %}https://via.placeholder.com/100{% endif %}" class="item-img" />
-        <div class="item-info">
-          <div>
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-price">{{ item.price }} تومان</div>
-          </div>
-          <div class="d-flex justify-content-between align-items-end">
-            <div class="qty-wrapper">
-              <button type="button" class="btn-qty" onclick="changeQty('{{ item.id }}', -1)">-</button>
-              <input type="number" id="qty-{{ item.id }}" name="quantity_{{ item.id }}" value="0" readonly class="qty-input" />
-              <button type="button" class="btn-qty" onclick="changeQty('{{ item.id }}', 1)">+</button>
+        <div class="row g-3">
+          {% for item in category.items.all %}
+          <div class="col-12 col-md-6">
+            <div class="menu-card-pro-v4 reveal-scale" id="card-{{ item.id }}">
+              
+              <div class="content-section">
+                <div>
+                  <div class="fw-bold" style="color: #c49a6c; font-size: 1.1rem;">{{ item.name }}</div>
+                  {% if item.subtitle %}
+                    <div class="opacity-50 mt-1" style="font-size: 0.7rem;">{{ item.subtitle }}</div>
+                  {% endif %}
+                </div>
+                <div class="fw-bold" style="color: #ffffff;">
+                  {{ item.price }} <small style="font-size: 0.6rem; opacity: 0.6;">تومان</small>
+                </div>
+              </div>
+
+              <div class="action-section">
+                <div class="img-wrapper">
+                    <img src="{% if item.image %}{{ item.image.url }}{% else %}https://via.placeholder.com/150{% endif %}"
+                         class="img-small-rounded" alt="{{ item.name }}" />
+                </div>
+
+                <div class="v-control-bar">
+                  <button type="button" class="v-btn-action" onclick="changeQty('{{ item.id }}', 1)">+</button>
+                  <div class="v-counter-box">
+                    <span id="qty-text-{{ item.id }}" style="font-family: monospace;">0</span>
+                  </div>
+                  <button type="button" class="v-btn-action" onclick="changeQty('{{ item.id }}', -1)">-</button>
+                </div>
+              </div>
+
+              <input type="number" id="qty-{{ item.id }}" name="quantity_{{ item.id }}" value="0" style="display: none" />
+              <input type="checkbox" name="items" value="{{ item.id }}" id="check-{{ item.id }}" style="display: none" />
             </div>
-            <input type="checkbox" name="items" value="{{ item.id }}" id="check-{{ item.id }}" style="display: none" />
           </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %} 
       {% endfor %}
 
-      <div class="order-bar">
-        <button type="button" class="btn-submit" data-bs-toggle="modal" data-bs-target="#tableModal">
-          ثبت سفارش نهایی
-        </button>
+      <div class="fixed-bottom p-3" style="background: #000; border-top: 1px solid #c49a6c;">
+        <div class="container">
+          <button type="button" class="btn w-100 py-3 fw-bold"
+            style="background: #c49a6c; color: #000; border-radius: 12px;"
+            data-bs-toggle="modal" data-bs-target="#orderModal">
+            🛒 تکمیل و ثبت سفارش
+          </button>
+        </div>
       </div>
 
-      <div class="modal fade" id="tableModal" tabindex="-1" aria-hidden="true">
+      <div class="modal fade" id="orderModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style="border-radius: 20px">
-            <div class="modal-header border-0">
-              <h5 class="modal-title w-100 text-center">تکمیل سفارش ☕</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-              <p>لطفاً شماره میز خود را وارد کنید:</p>
-              <input type="number" name="table_number" class="form-control form-control-lg text-center mx-auto" 
-                     style="width: 100px; border-radius: 15px; border: 2px solid var(--cafe-gold);" required min="1" />
-            </div>
-            <div class="modal-footer border-0 justify-content-center">
-              <button type="submit" class="btn btn-lg w-75" style="background: var(--cafe-brown); color: white; border-radius: 15px;">
-                تایید و ثبت نهایی
-              </button>
+          <div class="modal-content" style="background: #111; border: 1px solid #c49a6c; color: white;">
+            <div class="modal-body text-center p-5">
+              <h5 class="mb-4">شماره میز؟</h5>
+              <input type="number" name="table_number" class="form-control form-control-lg text-center mx-auto mb-4"
+                style="width: 100px; background: #000; border: 1px solid #c49a6c; color: #fff; font-size: 2rem;" required />
+              <button type="submit" class="btn w-100 py-3 fw-bold" style="background: #c49a6c; color: #000;">ثبت سفارش</button>
             </div>
           </div>
         </div>
@@ -152,11 +100,23 @@
     <script>
       function changeQty(itemId, delta) {
         const input = document.getElementById("qty-" + itemId);
+        const textDisplay = document.getElementById("qty-text-" + itemId);
         const checkbox = document.getElementById("check-" + itemId);
+        const card = document.getElementById("card-" + itemId);
+        
         let val = parseInt(input.value) + delta;
         if (val < 0) val = 0;
+        
         input.value = val;
+        textDisplay.innerText = val;
         checkbox.checked = val > 0;
+
+        // تغییر وضعیت بصری کارت
+        if (val > 0) {
+            card.classList.add('active-item');
+        } else {
+            card.classList.remove('active-item');
+        }
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
