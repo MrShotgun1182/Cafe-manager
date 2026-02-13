@@ -7,15 +7,18 @@
     <title>کافه دنج | منوی دیجیتال</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   </head>
-  <body style="background-color: #000;">
+  <body class="dark-theme">
 
-    <div class="cafe-navbar sticky-top" style="background: rgba(0, 0, 0, 0.95); border-bottom: 1px solid #1a1a1a;">
+    <div class="cafe-navbar-dark sticky-top">
       <div class="container text-center py-3">
-        <h1 class="text-gradient h4 mb-3" style="font-weight: 800;">☕ منوی کافه دنج</h1>
-        <div class="d-flex gap-2 overflow-auto no-scrollbar pb-2">
+        <h1 class="cafe-title-dark h4 mb-3">☕ کافه دنج</h1>
+        <div class="d-flex gap-2 overflow-auto no-scrollbar pb-2 justify-content-center">
           {% for category in categories %}
-          <a href="#cat-{{ category.id }}" class="badge category-link text-decoration-none px-3 py-2" style="background: #111; border: 1px solid #222; color: #c49a6c;">
+          <a href="#cat-{{ category.id }}" class="badge category-link-dark text-decoration-none px-3 py-2">
             {{ category.name }}
           </a>
           {% endfor %}
@@ -27,45 +30,31 @@
       {% csrf_token %} 
       
       {% for category in categories %}
-      <div id="cat-{{ category.id }}" class="mb-4">
-        <h2 class="h6 mb-3 px-2" style="color: #c49a6c; border-right: 3px solid #c49a6c; padding-right: 10px;">
-             {{ category.name }}
-        </h2>
+      <div id="cat-{{ category.id }}" class="mb-5">
+        <h2 class="category-header-dark h5">{{ category.name }}</h2>
 
         <div class="row g-3">
           {% for item in category.items.all %}
-          <div class="col-12 col-md-6">
-            <div class="menu-card-pro-v4 reveal-scale" id="card-{{ item.id }}">
+          <div class="col-12">
+            <div class="menu-card-dark" id="card-{{ item.id }}">
+              <img src="{% if item.image %}{{ item.image.url }}{% else %}https://via.placeholder.com/150{% endif %}" class="item-image-dark" alt="{{ item.name }}" />
               
-              <div class="content-section">
-                <div>
-                  <div class="fw-bold" style="color: #c49a6c; font-size: 1.1rem;">{{ item.name }}</div>
-                  {% if item.subtitle %}
-                    <div class="opacity-50 mt-1" style="font-size: 0.7rem;">{{ item.subtitle }}</div>
-                  {% endif %}
-                </div>
-                <div class="fw-bold" style="color: #ffffff;">
-                  {{ item.price }} <small style="font-size: 0.6rem; opacity: 0.6;">تومان</small>
-                </div>
+              <div class="item-details-dark">
+                <div class="item-name-dark">{{ item.name }}</div>
+                {% if item.subtitle %}
+                <div class="item-description-dark opacity-75 mt-1">{{ item.subtitle }}</div>
+                {% endif %}
+                <div class="item-price-dark mt-2">{{ item.price }} تومان</div>
               </div>
 
-              <div class="action-section">
-                <div class="img-wrapper">
-                    <img src="{% if item.image %}{{ item.image.url }}{% else %}https://via.placeholder.com/150{% endif %}"
-                         class="img-small-rounded" alt="{{ item.name }}" />
-                </div>
-
-                <div class="v-control-bar">
-                  <button type="button" class="v-btn-action" onclick="changeQty('{{ item.id }}', 1)">+</button>
-                  <div class="v-counter-box">
-                    <span id="qty-text-{{ item.id }}" style="font-family: monospace;">0</span>
-                  </div>
-                  <button type="button" class="v-btn-action" onclick="changeQty('{{ item.id }}', -1)">-</button>
-                </div>
+              <div class="quantity-control-dark">
+                  <button type="button" class="qty-btn-dark" onclick="changeQty('{{ item.id }}', 1)">+</button>
+                  <span id="qty-text-{{ item.id }}" class="qty-display-dark">0</span>
+                  <button type="button" class="qty-btn-dark" onclick="changeQty('{{ item.id }}', -1)">-</button>
               </div>
 
-              <input type="number" id="qty-{{ item.id }}" name="quantity_{{ item.id }}" value="0" style="display: none" />
-              <input type="checkbox" name="items" value="{{ item.id }}" id="check-{{ item.id }}" style="display: none" />
+              <input type="number" id="qty-{{ item.id }}" name="quantity_{{ item.id }}" value="0" class="qty-input" />
+              <input type="checkbox" name="items" value="{{ item.id }}" id="check-{{ item.id }}" class="item-checkbox" />
             </div>
           </div>
           {% endfor %}
@@ -73,24 +62,25 @@
       </div>
       {% endfor %}
 
-      <div class="fixed-bottom p-3" style="background: #000; border-top: 1px solid #c49a6c;">
+      <div class="fixed-bottom p-3 order-bar-dark">
         <div class="container">
-          <button type="button" class="btn w-100 py-3 fw-bold"
-            style="background: #c49a6c; color: #000; border-radius: 12px;"
-            data-bs-toggle="modal" data-bs-target="#orderModal">
-            🛒 تکمیل و ثبت سفارش
+          <button type="button" class="btn w-100 order-btn-dark" data-bs-toggle="modal" data-bs-target="#orderModal">
+            مشاهده سبد خرید و ثبت سفارش
           </button>
         </div>
       </div>
 
       <div class="modal fade" id="orderModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style="background: #111; border: 1px solid #c49a6c; color: white;">
-            <div class="modal-body text-center p-5">
-              <h5 class="mb-4">شماره میز؟</h5>
-              <input type="number" name="table_number" class="form-control form-control-lg text-center mx-auto mb-4"
-                style="width: 100px; background: #000; border: 1px solid #c49a6c; color: #fff; font-size: 2rem;" required />
-              <button type="submit" class="btn w-100 py-3 fw-bold" style="background: #c49a6c; color: #000;">ثبت سفارش</button>
+          <div class="modal-content modal-content-dark">
+            <div class="modal-header border-0">
+                <h5 class="modal-title-dark">تایید نهایی سفارش</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+              <h6 class="mb-4">لطفا شماره میز خود را وارد کنید:</h6>
+              <input type="number" name="table_number" class="form-control form-control-lg text-center mx-auto mb-4 table-input-dark" required />
+              <button type="submit" class="btn w-100 submit-btn-dark">ثبت نهایی سفارش</button>
             </div>
           </div>
         </div>
@@ -101,8 +91,7 @@
       function changeQty(itemId, delta) {
         const input = document.getElementById("qty-" + itemId);
         const textDisplay = document.getElementById("qty-text-" + itemId);
-        const checkbox = document.getElementById("check-" + itemId);
-        const card = document.getElementById("card-" + itemId);
+        const checkbox = document.getElementById("check-" + item.id);
         
         let val = parseInt(input.value) + delta;
         if (val < 0) val = 0;
@@ -110,13 +99,6 @@
         input.value = val;
         textDisplay.innerText = val;
         checkbox.checked = val > 0;
-
-        // تغییر وضعیت بصری کارت
-        if (val > 0) {
-            card.classList.add('active-item');
-        } else {
-            card.classList.remove('active-item');
-        }
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

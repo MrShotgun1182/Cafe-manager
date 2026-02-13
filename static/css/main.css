@@ -86,3 +86,372 @@ body {
     border-color: var(--primary);
     background: #16120e;
 }
+/* Login page specific styles */
+.login-body { 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    background: #f0f2f5; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    margin: 0; 
+}
+
+.login-box { 
+    background: white; 
+    padding: 30px; 
+    border-radius: 15px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    width: 90%; 
+    max-width: 380px;
+}
+
+.login-box h3 { 
+    text-align: center; 
+    color: #2c3e50; 
+    margin-bottom: 25px; 
+    font-size: 1.5rem;
+}
+
+.login-box input { 
+    width: 100%; 
+    padding: 12px 15px; 
+    margin-top: 15px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.login-box input:focus {
+    border-color: #3498db;
+}
+
+.login-box button { 
+    width: 100%; 
+    padding: 12px; 
+    background: #2c3e50; 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    margin-top: 25px; 
+    cursor: pointer; 
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.login-box button:hover {
+    background: #34495e;
+}
+
+.error { 
+    color: #e74c3c; 
+    text-align: center; 
+    background: #fdeaea;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+    }
+    .login-box h3 { font-size: 1.2rem; }
+}
+
+/* Dashboard specific styles */
+.dashboard-body { background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, sans-serif; }
+.kanban-board { display: flex; gap: 15px; padding: 10px; }
+.kanban-column { 
+    background-color: #e9ecef; 
+    border-radius: 15px; 
+    min-width: 300px; 
+    flex: 1; 
+    padding: 12px; 
+    height: fit-content;
+}
+@media (max-width: 768px) {
+    .kanban-board { flex-direction: column; padding: 5px; }
+    .kanban-column { min-width: 100%; margin-bottom: 20px; }
+}
+.order-card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 12px; }
+.btn-action { border-radius: 8px; font-weight: bold; padding: 10px; }
+.item-row { display: flex; justify-content: space-between; border-bottom: 1px dashed #eee; padding: 5px 0; }
+
+/* Menu page specific styles */
+.menu-body {
+    background-color: #000;
+}
+
+.cafe-navbar {
+    background: rgba(0, 0, 0, 0.95); 
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.text-gradient {
+    font-weight: 800;
+}
+
+.category-link {
+    background: #111; 
+    border: 1px solid #222; 
+    color: #c49a6c;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+}
+
+.category-title {
+    color: #c49a6c; 
+    border-right: 3px solid #c49a6c; 
+    padding-right: 10px;
+}
+
+.menu-item-name {
+    color: #c49a6c; 
+    font-size: 1.1rem;
+}
+
+.menu-item-subtitle {
+    font-size: 0.7rem;
+}
+
+.menu-item-price {
+    color: #ffffff;
+}
+
+.menu-item-price small {
+    font-size: 0.6rem; 
+    opacity: 0.6;
+}
+
+.order-bar {
+    background: #000; 
+    border-top: 1px solid #c49a6c;
+}
+
+.order-button {
+    background: #c49a6c; 
+    color: #000; 
+    border-radius: 12px;
+}
+
+.order-modal-content {
+    background: #111; 
+    border: 1px solid #c49a6c; 
+    color: white;
+}
+
+.table-number-input {
+    width: 100px; 
+    background: #000; 
+    border: 1px solid #c49a6c; 
+    color: #fff; 
+    font-size: 2rem;
+}
+
+.submit-order-button {
+    background: #c49a6c; 
+    color: #000;
+}
+
+.qty-input, .item-checkbox {
+    display: none;
+}
+
+.qty-text {
+    font-family: monospace;
+}
+
+/* Order success page specific styles */
+.success-body { background-color: #f8f9fa; font-family: Tahoma, sans-serif; }
+.success-card { 
+    max-width: 400px; 
+    margin: 100px auto; 
+    padding: 30px; 
+    background: white; 
+    border-radius: 20px; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+.btn-return { background-color: #4e342e; color: white; border-radius: 12px; padding: 10px 25px; }
+.btn-return:hover { color: white; opacity: 0.9; }
+
+/* --- Dark & Modern Theme for Menu --- */
+
+.dark-theme {
+    background-color: #121212; /* Off-black for a softer look */
+    font-family: 'Vazirmatn', sans-serif;
+    color: #e0e0e0; /* Light gray for main text */
+}
+
+.dark-theme .cafe-navbar-dark {
+    background: rgba(18, 18, 18, 0.85); /* Semi-transparent dark background */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.dark-theme .cafe-title-dark {
+    color: #c49a6c; /* Bronze/gold accent */
+    font-weight: 700;
+}
+
+.dark-theme .category-link-dark {
+    background: #2a2a2a;
+    color: #c49a6c;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #3a3a3a;
+}
+
+.dark-theme .category-link-dark:hover,
+.dark-theme .category-link-dark.active {
+    background: #c49a6c;
+    color: #121212; /* Dark text on hover */
+    border-color: #c49a6c;
+}
+
+.dark-theme .category-header-dark {
+    color: #c49a6c;
+    font-weight: 600;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #c49a6c;
+    margin-bottom: 1.5rem;
+}
+
+.dark-theme .menu-card-dark {
+    background: #1e1e1e; /* Slightly lighter dark for cards */
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    transition: all 0.3s ease;
+}
+
+.dark-theme .menu-card-dark:hover {
+    transform: translateY(-5px);
+    border-color: #3f3f3f;
+}
+
+.dark-theme .item-image-dark {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-left: 15px;
+}
+
+.dark-theme .item-details-dark {
+    flex: 1;
+    text-align: right;
+}
+
+.dark-theme .item-name-dark {
+    font-weight: 600;
+    color: #e0e0e0;
+}
+
+.dark-theme .item-description-dark {
+    font-size: 0.85rem;
+    color: #a0a0a0; /* Dimmer text for description */
+}
+
+.dark-theme .item-price-dark {
+    font-weight: 700;
+    color: #c49a6c;
+}
+
+/* --- Vertical Stepper for Dark Theme --- */
+.dark-theme .quantity-control-dark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    margin-left: 10px;
+}
+
+.dark-theme .qty-btn-dark {
+    background: transparent;
+    border: none;
+    color: #a0a0a0; /* Dimmer controls */
+    font-size: 2.2rem;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 0;
+    height: 30px;
+    line-height: 0;
+    transition: color 0.2s ease;
+}
+
+.dark-theme .qty-btn-dark:hover {
+    color: #c49a6c; /* Accent color on hover */
+}
+
+.dark-theme .qty-display-dark {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    padding: 4px 0;
+    user-select: none;
+}
+
+.dark-theme .order-bar-dark {
+    background: rgba(18, 18, 18, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #2a2a2a;
+}
+
+.dark-theme .order-btn-dark {
+    background: #c49a6c;
+    color: #121212;
+    border: none;
+    border-radius: 15px;
+    font-weight: 700;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+.dark-theme .modal-content-dark {
+    background: #1e1e1e;
+    border: 1px solid #2a2a2a;
+    color: #e0e0e0;
+    border-radius: 20px;
+}
+
+.dark-theme .modal-title-dark {
+    color: #c49a6c;
+    font-weight: 600;
+}
+
+.dark-theme .table-input-dark {
+    background: #121212;
+    border: 2px solid #2a2a2a;
+    color: #e0e0e0;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.dark-theme .submit-btn-dark {
+    background: #c49a6c;
+    color: #121212;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 12px;
+}
