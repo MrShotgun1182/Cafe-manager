@@ -91,7 +91,7 @@
       function changeQty(itemId, delta) {
         const input = document.getElementById("qty-" + itemId);
         const textDisplay = document.getElementById("qty-text-" + itemId);
-        const checkbox = document.getElementById("check-" + item.id);
+        const checkbox = document.getElementById("check-" + itemId);
         
         let val = parseInt(input.value) + delta;
         if (val < 0) val = 0;
