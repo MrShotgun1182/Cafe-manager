@@ -7,7 +7,7 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('menu/', views.menu_view, name='menu'),
+    path('', views.menu_view, name='menu'),
     
     # داشبورد اصلی کارمندان
     path('dashboard/', views.staff_dashboard, name='staff_dashboard'),
